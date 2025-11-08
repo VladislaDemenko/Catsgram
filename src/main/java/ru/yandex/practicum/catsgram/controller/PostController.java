@@ -38,7 +38,12 @@ public class PostController {
 
     // вспомогательный метод для генерации идентификатора нового поста
     private long getNextId() {
-        return nextId++;
+        long currentMaxId = posts.keySet()
+                .stream()
+                .mapToLong(id -> id)
+                .max()
+                .orElse(0);
+        return ++currentMaxId;
     }
 
     @PutMapping
