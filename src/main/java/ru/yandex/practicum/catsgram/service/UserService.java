@@ -1,7 +1,6 @@
 package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
@@ -11,6 +10,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,6 +21,14 @@ public class UserService {
 
     public Collection<User> findAll() {
         return users.values();
+    }
+
+    // Новый метод для поиска пользователя по ID
+    public Optional<User> findUserById(Long userId) {
+        if (userId == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(users.get(userId));
     }
 
     public User create(User user) {
@@ -39,15 +47,15 @@ public class UserService {
         return user;
     }
 
-    public User update(@RequestBody User newUser) {
+    public User update(User newUser) {
         // Проверяем все необходимые условия
-        if (newUser.getId() == 0) {
+        if (newUser.getId() == null) {
             throw new ConditionsNotMetException("ID должен быть указан");
         }
 
         if (users.containsKey(newUser.getId())) {
             User oldUser = users.get(newUser.getId());
-            // Проверяем уникаольность нового Email
+            // Проверяем уникальность нового Email
             if (newUser.getEmail() != null && !newUser.getEmail().equals(oldUser.getEmail())) {
                 if (emailToUserId.containsKey(newUser.getEmail())) {
                     throw new DuplicatedDataException("Этот Email уже используется");
@@ -74,7 +82,6 @@ public class UserService {
 
         throw new NotFoundException("Пользователь с id = " + newUser.getId() + " не найден");
     }
-
 
     private long getNextId() {
         long currentMaxId = users.keySet()
