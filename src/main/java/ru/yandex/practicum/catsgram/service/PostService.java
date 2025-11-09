@@ -77,6 +77,10 @@ public class PostService {
         throw new NotFoundException("Пост с ID = " + newPost.getId() + " не найден");
     }
 
+    public Optional<Post> findById(long psotId) {
+        return Optional.ofNullable(posts.get(psotId));
+    }
+
     private long getNextId() {
         long currentMaxId = posts.keySet()
                 .stream()
