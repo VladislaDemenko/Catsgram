@@ -27,7 +27,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public Optional<User> findById(@PathVariable long userId) {
         return userService.findById(userId);
     }
