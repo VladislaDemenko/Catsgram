@@ -1,5 +1,6 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
         return userService.create(user);
     }
