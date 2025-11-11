@@ -8,4 +8,5 @@ public class Image {
     private long postId;
     private String originalFileName;
     private String filePath;
+
 }
