@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ImageService {
     private final Map<Long, Image> images = new HashMap<>();
 
-    public List<Image> getPostImage(long postId) {
+    public List<Image> getPostImages(long postId) {
         return images.values()
                 .stream()
                 .filter(image -> image.getPostId() == postId)
