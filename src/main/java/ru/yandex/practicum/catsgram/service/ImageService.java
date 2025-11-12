@@ -109,6 +109,7 @@ public class ImageService {
         return new ImageData(data, image.getOriginalFileName());
     }
 
+
     private byte[] loadFile(Image image) {
         Path path = Paths.get(image.getFilePath());
         if (Files.exists(path)) {
